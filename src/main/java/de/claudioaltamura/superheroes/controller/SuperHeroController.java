@@ -28,7 +28,7 @@ public class SuperHeroController {
     }
 
     @PostMapping(value = "/superheroes", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public SuperHero createRide(@Valid @RequestBody SuperHero superHero) {
+    public SuperHero createHero(@Valid @RequestBody SuperHero superHero) {
         return superHeroRepository.save(superHero);
     }
 }
