@@ -15,9 +15,9 @@ public class SuperHeroesApplication  {
 
     @Bean
     public CommandLineRunner sampleData(SuperHeroRepository repository) {
-        return (args) -> {
+        return args -> {
             repository.save(new SuperHero("Batman", "Bruce Wayne"));
-            repository.save(new SuperHero("Superman", "Clark Gable"));
+            repository.save(new SuperHero("Superman", "Clark Kent"));
         };
     }
 }
