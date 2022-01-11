@@ -1,19 +1,26 @@
 # spring-rest-hero
-Spring Boot REST Hero application example
+Spring Boot Superheroes example
 
-## Get
+## examples
 
 find all
-curl -i http://localhost:8080/api/v1/heroes
+   
+     curl -i http://localhost:8080/api/v1/heroes
 
 get one
-curl -i http://localhost:8080/api/v1/heroes/1
+    
+    curl -i http://localhost:8080/api/v1/heroes/1
 
-## Post
-    curl -i -X POST -H "Accept:application" http://localhost:8080/api/v1/heroes
+## links
 
-http://localhost:8080/h2-console
+h2-console
 
-http://localhost:8080/swagger-ui.html
+    http://localhost:8080/h2-console
 
-http://localhost:8080/v3/api-docs
+Swagger-UI
+        
+    http://localhost:8080/swagger-ui.html
+
+OpenAPI
+    
+    http://localhost:8080/v3/api-docs
