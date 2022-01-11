@@ -1,6 +1,19 @@
-# spring-boot-superheroes-example
-Spring Boot simple REST JPA example
+# spring-rest-hero
+Spring Boot REST Hero application example
 
-### H2 Console
+## Get
 
-    http://localhost:8080/h2-console
+find all
+curl -i http://localhost:8080/api/v1/heroes
+
+get one
+curl -i http://localhost:8080/api/v1/heroes/1
+
+## Post
+    curl -i -X POST -H "Accept:application" http://localhost:8080/api/v1/heroes
+
+http://localhost:8080/h2-console
+
+http://localhost:8080/swagger-ui.html
+
+http://localhost:8080/v3/api-docs
