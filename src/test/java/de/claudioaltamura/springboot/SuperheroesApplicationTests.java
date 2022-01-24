@@ -1,4 +1,4 @@
-package de.claudioaltamura.springboot.superheroes;
+package de.claudioaltamura.springboot;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
