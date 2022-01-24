@@ -19,6 +19,14 @@ public class Superhero {
 	@DecimalMax(value="100.0")
 	private double power;
 
+	public Superhero() {}
+
+	public Superhero(String name, String realName, double power) {
+		this.name = name;
+		this.realName = realName;
+		this.power = power;
+	}
+
 	public Long getId() {
 		return id;
 	}
