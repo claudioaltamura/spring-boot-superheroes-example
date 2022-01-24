@@ -1,4 +1,4 @@
-# spring-rest-hero
+# spring-boot-superheroes-example
 Spring Boot Superheroes example
 
 ## examples
@@ -16,6 +16,10 @@ get one
 h2-console
 
     http://localhost:8080/h2-console
+
+Healthcheck
+
+    http://localhost:8080/actuator/health
 
 Swagger-UI
         
