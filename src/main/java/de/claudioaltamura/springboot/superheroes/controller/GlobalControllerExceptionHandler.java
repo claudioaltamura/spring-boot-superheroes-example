@@ -1,4 +1,4 @@
-package de.claudioaltamura.springboot.superheroes.web;
+package de.claudioaltamura.springboot.superheroes.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
