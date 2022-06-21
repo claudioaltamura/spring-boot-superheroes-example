@@ -1,5 +1,11 @@
 package de.claudioaltamura.springboot.superheroes.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -36,8 +42,17 @@ public class SuperheroController {
 		return new ResponseEntity<>(superheroes, HttpStatus.OK);
 	}
 
+	@Operation(summary = "Get a superhero by its id")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Found the superhero",
+					content = { @Content(mediaType = "application/json",
+							schema = @Schema(implementation = Superhero.class)) }),
+			@ApiResponse(responseCode = "400", description = "Invalid id supplied",
+					content = @Content),
+			@ApiResponse(responseCode = "404", description = "Superhero not found",
+					content = @Content) })
 	@GetMapping("/superheroes/{id}")
-	public ResponseEntity<Superhero> getById(@PathVariable("id") long id) {
+	public ResponseEntity<Superhero> getById(@Parameter(description = "id of superhero") @PathVariable("id") long id) {
 		return new ResponseEntity<>(superheroService.getById(id), HttpStatus.OK);
 	}
 

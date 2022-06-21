@@ -17,11 +17,13 @@
         "tags": [
           "superhero-controller"
         ],
+        "summary": "Get a superhero by its id",
         "operationId": "getById",
         "parameters": [
           {
             "name": "id",
             "in": "path",
+            "description": "id of superhero",
             "required": true,
             "schema": {
               "type": "integer",
@@ -31,9 +33,9 @@
         ],
         "responses": {
           "500": {
-            "description": "Internal Server Error",
+            "description": "internal server error",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
@@ -41,24 +43,21 @@
             }
           },
           "404": {
-            "description": "Not Found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "description": "Superhero not found",
+            "content": {}
           },
           "200": {
-            "description": "OK",
+            "description": "Found the superhero",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Superhero"
                 }
               }
             }
+          },
+          "400": {
+            "description": "Invalid id supplied"
           }
         }
       },
@@ -90,9 +89,9 @@
         },
         "responses": {
           "500": {
-            "description": "Internal Server Error",
+            "description": "internal server error",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
@@ -100,9 +99,9 @@
             }
           },
           "404": {
-            "description": "Not Found",
+            "description": "Superhero not found",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
@@ -139,9 +138,9 @@
         ],
         "responses": {
           "500": {
-            "description": "Internal Server Error",
+            "description": "internal server error",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
@@ -149,9 +148,9 @@
             }
           },
           "404": {
-            "description": "Not Found",
+            "description": "Superhero not found",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
@@ -249,9 +248,9 @@
         "operationId": "getAll",
         "responses": {
           "500": {
-            "description": "Internal Server Error",
+            "description": "internal server error",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
@@ -259,9 +258,9 @@
             }
           },
           "404": {
-            "description": "Not Found",
+            "description": "Superhero not found",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
@@ -300,9 +299,9 @@
         },
         "responses": {
           "500": {
-            "description": "Internal Server Error",
+            "description": "internal server error",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
@@ -310,9 +309,9 @@
             }
           },
           "404": {
-            "description": "Not Found",
+            "description": "Superhero not found",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
@@ -338,9 +337,9 @@
         "operationId": "deleteAll",
         "responses": {
           "500": {
-            "description": "Internal Server Error",
+            "description": "internal server error",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
@@ -348,9 +347,9 @@
             }
           },
           "404": {
-            "description": "Not Found",
+            "description": "Superhero not found",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
@@ -459,9 +458,9 @@
         ],
         "responses": {
           "500": {
-            "description": "Internal Server Error",
+            "description": "internal server error",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }
@@ -469,9 +468,9 @@
             }
           },
           "404": {
-            "description": "Not Found",
+            "description": "Superhero not found",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error"
                 }

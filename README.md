@@ -11,6 +11,10 @@ get one
     
     curl -i http://localhost:8080/api/v1/heroes/1
 
+## generate OpenAPI
+
+    ./gradlew generateOpenApiDocs
+
 ## links
 
 h2-console

@@ -34,6 +34,6 @@ test {
 openApi {
     apiDocsUrl.set("http://localhost:8080/api-docs")
     outputDir.set(file("$projectDir/src/main/resources"))
-    outputFileName.set("openapi.json")
+    outputFileName.set("openapi.yaml")
     waitTimeInSeconds.set(10)
 }
