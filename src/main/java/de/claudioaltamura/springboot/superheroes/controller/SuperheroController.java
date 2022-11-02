@@ -56,6 +56,15 @@ public class SuperheroController {
 		return new ResponseEntity<>(superheroService.getById(id), HttpStatus.OK);
 	}
 
+	@Operation(summary = "Create a superhero")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "created superhero",
+					content = { @Content(mediaType = "application/json",
+							schema = @Schema(implementation = Superhero.class)) }),
+			@ApiResponse(responseCode = "400", description = "Invalid superhero supplied.",
+					content = @Content),
+			@ApiResponse(responseCode = "500", description = "Internal Server error",
+					content = @Content) })
 	@PostMapping("/superheroes")
 	public ResponseEntity<Superhero> createSuperhero(@RequestBody @Valid Superhero superhero) {
 		Superhero newSuperhero = superheroService.save(superhero);
