@@ -2,6 +2,7 @@ package de.claudioaltamura.springboot.superheroes.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -36,6 +37,14 @@ public class SuperheroController {
 		this.superheroService = superheroService;
 	}
 
+	@Operation(summary = "Get superheroes")
+
+	@ApiResponses(value = {
+		@ApiResponse(responseCode = "200", description = "list of superheroes",
+				content = { @Content(mediaType = "application/json",
+						array = @ArraySchema(schema = @Schema(implementation = Superhero.class)))}),
+		@ApiResponse(responseCode = "500", description = "Internal Server error",
+				content = @Content) })
 	@GetMapping("/superheroes")
 	public ResponseEntity<List<Superhero>> getAll() {
 		List<Superhero> superheroes = superheroService.getAll();
@@ -46,11 +55,7 @@ public class SuperheroController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Found the superhero",
 					content = { @Content(mediaType = "application/json",
-							schema = @Schema(implementation = Superhero.class)) }),
-			@ApiResponse(responseCode = "400", description = "Invalid id supplied",
-					content = @Content),
-			@ApiResponse(responseCode = "404", description = "Superhero not found",
-					content = @Content) })
+							schema = @Schema(implementation = Superhero.class)) })})
 	@GetMapping("/superheroes/{id}")
 	public ResponseEntity<Superhero> getById(@Parameter(description = "id of superhero") @PathVariable("id") long id) {
 		return new ResponseEntity<>(superheroService.getById(id), HttpStatus.OK);
@@ -60,17 +65,18 @@ public class SuperheroController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "created superhero",
 					content = { @Content(mediaType = "application/json",
-							schema = @Schema(implementation = Superhero.class)) }),
-			@ApiResponse(responseCode = "400", description = "Invalid superhero supplied.",
-					content = @Content),
-			@ApiResponse(responseCode = "500", description = "Internal Server error",
-					content = @Content) })
+							schema = @Schema(implementation = Superhero.class)) })})
 	@PostMapping("/superheroes")
 	public ResponseEntity<Superhero> createSuperhero(@RequestBody @Valid Superhero superhero) {
 		Superhero newSuperhero = superheroService.save(superhero);
 		return new ResponseEntity<>(newSuperhero, HttpStatus.CREATED);
 	}
 
+	@Operation(summary = "Update a superhereo")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "updated superhero",
+					content = { @Content(mediaType = "application/json",
+							schema = @Schema(implementation = Superhero.class))})})
 	@PutMapping("/superheroes/{id}")
 	public ResponseEntity<Superhero> updateSuperhero(@PathVariable("id") long id, @RequestBody @Valid Superhero superhero) {
 		if(superheroService.existsById(id)) {
