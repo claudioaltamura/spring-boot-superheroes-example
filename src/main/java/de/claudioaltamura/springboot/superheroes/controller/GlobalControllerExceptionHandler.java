@@ -26,7 +26,7 @@ public class GlobalControllerExceptionHandler {
 	}
 
 	@ExceptionHandler(Exception.class)
-	@ApiResponse(responseCode = "500", description = "internal server error",
+	@ApiResponse(responseCode = "500", description = "Internal server error",
 			content = { @Content(mediaType = "application/json",
 					schema = @Schema(implementation = Error.class)) })
 	public ResponseEntity<Error> handleThrowable(RuntimeException ex) {
