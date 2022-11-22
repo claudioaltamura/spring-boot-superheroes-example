@@ -1,6 +1,7 @@
 package de.claudioaltamura.springboot.superheroes;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -9,7 +10,7 @@ public interface SuperheroService {
 
 	List<Superhero> getAll();
 
-	Superhero getById(@NotNull Long id);
+	Optional<Superhero> getById(@NotNull Long id);
 
 	boolean existsById(@NotNull  Long id);
 

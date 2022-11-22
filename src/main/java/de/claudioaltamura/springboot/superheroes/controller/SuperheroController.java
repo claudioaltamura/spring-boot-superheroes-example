@@ -41,14 +41,16 @@ public class SuperheroController {
 
 	@ApiResponses(value = {
 		@ApiResponse(responseCode = "200", description = "list of superheroes",
-				content = { @Content(mediaType = "application/json",
-						array = @ArraySchema(schema = @Schema(implementation = Superhero.class)))}),
-		@ApiResponse(responseCode = "500", description = "Internal Server error",
-				content = @Content) })
+				content = {
+					@Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Superhero.class)))}
+		),
+		@ApiResponse(responseCode = "500", description = "Internal Server error", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)) }
+		)}
+	)
 	@GetMapping("/superheroes")
 	public ResponseEntity<List<Superhero>> getAll() {
-		List<Superhero> superheroes = superheroService.getAll();
-		return new ResponseEntity<>(superheroes, HttpStatus.OK);
+		return new ResponseEntity<>(superheroService.getAll(), HttpStatus.OK);
 	}
 
 	@Operation(summary = "Get a superhero by its id")
@@ -58,7 +60,8 @@ public class SuperheroController {
 							schema = @Schema(implementation = Superhero.class)) })})
 	@GetMapping("/superheroes/{id}")
 	public ResponseEntity<Superhero> getById(@Parameter(description = "id of superhero") @PathVariable("id") long id) {
-		return new ResponseEntity<>(superheroService.getById(id), HttpStatus.OK);
+		final var superhero = superheroService.getById(id).orElseThrow(() -> new SuperheroNotFoundException(String.format("Superhero (id=%d) not found.", id)));
+		return new ResponseEntity<>(superhero, HttpStatus.OK);
 	}
 
 	@Operation(summary = "Create a superhero")

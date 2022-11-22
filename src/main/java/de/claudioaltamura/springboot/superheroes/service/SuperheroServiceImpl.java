@@ -1,6 +1,7 @@
 package de.claudioaltamura.springboot.superheroes.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
@@ -31,8 +32,8 @@ public class SuperheroServiceImpl implements SuperheroService {
 		return superheroRepository.findAll().stream().map(superheroMapper::toDto).collect(Collectors.toList());
 	}
 
-	public Superhero getById(@NotNull Long id) {
-		return superheroRepository.findById(id).map(superheroMapper::toDto).orElseThrow(()-> new SuperheroNotFoundException(String.format("Superhero (id=%d) not found.", id)));
+	public Optional<Superhero> getById(@NotNull Long id) {
+		return superheroRepository.findById(id).map(superheroMapper::toDto);
 	}
 
 	public boolean existsById(@NotNull Long id) {
