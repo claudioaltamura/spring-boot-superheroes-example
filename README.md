@@ -9,11 +9,11 @@ Spring Boot Superheroes example
 
 find all
    
-     curl -i http://localhost:8080/api/v1/heroes
+     curl -i http://localhost:8080/api/v1/superheroes
 
 get one
     
-    curl -i http://localhost:8080/api/v1/heroes/1
+    curl -i http://localhost:8080/api/v1/superheroes/1
 
 ## generate OpenAPI
 
