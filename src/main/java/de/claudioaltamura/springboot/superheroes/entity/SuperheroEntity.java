@@ -1,5 +1,8 @@
 package de.claudioaltamura.springboot.superheroes.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -13,6 +16,8 @@ import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
+@Getter
+@Setter
 @Table(name="superheroes")
 public class SuperheroEntity {
 
@@ -31,38 +36,6 @@ public class SuperheroEntity {
 	@DecimalMax(value="100.0")
 	@Column(name = "power", nullable = false)
 	private double power;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getRealName() {
-		return realName;
-	}
-
-	public void setRealName(String realName) {
-		this.realName = realName;
-	}
-
-	public double getPower() {
-		return power;
-	}
-
-	public void setPower(double power) {
-		this.power = power;
-	}
 
 	@Override
 	public boolean equals(Object o) {
