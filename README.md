@@ -15,6 +15,19 @@ get one
     
     curl -i http://localhost:8080/api/v1/superheroes/1
 
+create one
+
+    curl -X 'POST' \
+    'http://localhost:8080/api/v1/superheroes' \
+    -H 'accept: application/json' \
+    -H 'Content-Type: application/json' \
+    -d '{
+    "id": 3,
+    "name": "SuperheroA",
+    "realName": "A superhero",
+    "power": 100
+    }'
+
 ## generate OpenAPI
 
     ./gradlew generateOpenApiDocs
