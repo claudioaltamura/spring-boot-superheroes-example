@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,17 +29,15 @@ import de.claudioaltamura.springboot.superheroes.Superhero;
 import de.claudioaltamura.springboot.superheroes.SuperheroService;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1")
 public class SuperheroController {
 
 	private final SuperheroService superheroService;
 
-	public SuperheroController(SuperheroService superheroService) {
-		this.superheroService = superheroService;
-	}
 
-	@Operation(summary = "Get superheroes")
-
+	@GetMapping("/superheroes")
+	@Operation(summary = "Get superheroes", tags = "Superhero")
 	@ApiResponses(value = {
 		@ApiResponse(responseCode = "200", description = "list of superheroes",
 				content = {
@@ -48,39 +47,63 @@ public class SuperheroController {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)) }
 		)}
 	)
-	@GetMapping("/superheroes")
 	public ResponseEntity<List<Superhero>> getAll() {
 		return new ResponseEntity<>(superheroService.getAll(), HttpStatus.OK);
 	}
 
-	@Operation(summary = "Get a superhero by its id")
+	@GetMapping("/superheroes/{id}")
+	@Operation(summary = "Get a superhero by id", tags = "Superhero")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Found the superhero",
 					content = { @Content(mediaType = "application/json",
-							schema = @Schema(implementation = Superhero.class)) })})
-	@GetMapping("/superheroes/{id}")
+							schema = @Schema(implementation = Superhero.class)) }),
+			@ApiResponse(responseCode = "400", description = "bad request",
+					content = { @Content(mediaType = "application/json",
+							schema = @Schema(implementation = Error.class)) }),
+			@ApiResponse(responseCode = "404", description = "Superhero not found",
+					content = { @Content(mediaType = "application/json",
+							schema = @Schema(implementation = Error.class)) }),
+			@ApiResponse(responseCode = "500", description = "Internal Server error", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)) })
+			})
 	public ResponseEntity<Superhero> getById(@Parameter(description = "id of superhero") @PathVariable("id") long id) {
 		final var superhero = superheroService.getById(id).orElseThrow(() -> new SuperheroNotFoundException(String.format("Superhero (id=%d) not found.", id)));
 		return new ResponseEntity<>(superhero, HttpStatus.OK);
 	}
 
-	@Operation(summary = "Create a superhero")
+	@PostMapping("/superheroes")
+	@Operation(summary = "Creates a superhero", tags = "Superhero")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "created superhero",
 					content = { @Content(mediaType = "application/json",
-							schema = @Schema(implementation = Superhero.class)) })})
-	@PostMapping("/superheroes")
+							schema = @Schema(implementation = Superhero.class)) }),
+			@ApiResponse(responseCode = "400", description = "bad request",
+					content = { @Content(mediaType = "application/json",
+							schema = @Schema(implementation = Error.class)) }),
+			@ApiResponse(responseCode = "500", description = "Internal Server error", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)) })
+	})
 	public ResponseEntity<Superhero> createSuperhero(@RequestBody @Valid Superhero superhero) {
 		Superhero newSuperhero = superheroService.save(superhero);
 		return new ResponseEntity<>(newSuperhero, HttpStatus.CREATED);
 	}
 
-	@Operation(summary = "Update a superhereo")
+	@PutMapping("/superheroes/{id}")
+	@Operation(summary = "Updates a superhero", tags = "Superhero")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "updated superhero",
 					content = { @Content(mediaType = "application/json",
-							schema = @Schema(implementation = Superhero.class))})})
-	@PutMapping("/superheroes/{id}")
+							schema = @Schema(implementation = Superhero.class)) }),
+			@ApiResponse(responseCode = "400", description = "bad request",
+					content = { @Content(mediaType = "application/json",
+							schema = @Schema(implementation = Error.class)) }),
+			@ApiResponse(responseCode = "404", description = "Superhero not found",
+					content = { @Content(mediaType = "application/json",
+							schema = @Schema(implementation = Error.class)) }),
+			@ApiResponse(responseCode = "500", description = "Internal Server error", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)) })
+
+	})
 	public ResponseEntity<Superhero> updateSuperhero(@PathVariable("id") long id, @RequestBody @Valid Superhero superhero) {
 		if(superheroService.existsById(id)) {
 			return new ResponseEntity<>(superheroService.update(superhero), HttpStatus.OK);
@@ -90,12 +113,35 @@ public class SuperheroController {
 	}
 
 	@DeleteMapping("/superheroes/{id}")
+	@Operation(summary = "Deletes a superheroes by id", tags = "Superhero")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "204", description = "deleted superhero",
+					content = { @Content(mediaType = "application/json",
+							schema = @Schema(implementation = Superhero.class)) }),
+			@ApiResponse(responseCode = "400", description = "bad request",
+					content = { @Content(mediaType = "application/json",
+							schema = @Schema(implementation = Error.class)) }),
+			@ApiResponse(responseCode = "404", description = "Superhero not found",
+					content = { @Content(mediaType = "application/json",
+							schema = @Schema(implementation = Error.class)) }),
+			@ApiResponse(responseCode = "500", description = "Internal Server error", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)) })
+
+	})
 	public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") long id) {
 		superheroService.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
 	@DeleteMapping("/superheroes")
+	@Operation(summary = "Deletes all superheroes", tags = "Superhero")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "204", description = "deleted superheroes",
+					content = { @Content(mediaType = "application/json",
+							schema = @Schema(implementation = Superhero.class)) }),
+			@ApiResponse(responseCode = "500", description = "Internal Server error", content = {
+					@Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)) })
+	})
 	public ResponseEntity<HttpStatus> deleteAll() {
 		superheroService.deleteAll();
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
