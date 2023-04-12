@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/claudioaltamura/spring-boot-superheroes-example.svg?branch=master)](https://travis-ci.com/claudioaltamura/spring-boot-superheroes-example)
+[![Build Status](https://travis-ci.com/claudioaltamura/spring-boot-superheroes-example.svg?branch=main)](https://travis-ci.com/github/claudioaltamura/spring-boot-superheroes-example)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
