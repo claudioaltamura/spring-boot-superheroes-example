@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import de.claudioaltamura.springboot.superheroes.Superhero;
@@ -18,15 +19,11 @@ import de.claudioaltamura.springboot.superheroes.repository.SuperheroRepository;
 
 @Transactional
 @Service
+@RequiredArgsConstructor
 public class SuperheroServiceImpl implements SuperheroService {
 
 	private final SuperheroRepository superheroRepository;
 	private final SuperheroMapper superheroMapper;
-
-	public SuperheroServiceImpl(SuperheroRepository superheroRepository, SuperheroMapper superheroMapper) {
-		this.superheroRepository = superheroRepository;
-		this.superheroMapper = superheroMapper;
-	}
 
 	public List<Superhero> getAll() {
 		return superheroRepository.findAll().stream().map(superheroMapper::toDto).collect(Collectors.toList());
