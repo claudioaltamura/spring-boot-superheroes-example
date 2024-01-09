@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import de.claudioaltamura.springboot.superheroes.SuperheroNotFoundException;
 import de.claudioaltamura.springboot.superheroes.Superhero;
 import de.claudioaltamura.springboot.superheroes.SuperheroService;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,7 +35,6 @@ import de.claudioaltamura.springboot.superheroes.SuperheroService;
 public class SuperheroController {
 
 	private final SuperheroService superheroService;
-
 
 	@GetMapping("/superheroes")
 	@Operation(summary = "Get superheroes", tags = "Superhero")
@@ -84,8 +84,14 @@ public class SuperheroController {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)) })
 	})
 	public ResponseEntity<Superhero> createSuperhero(@RequestBody @Valid Superhero superhero) {
-		Superhero newSuperhero = superheroService.save(superhero);
-		return new ResponseEntity<>(newSuperhero, HttpStatus.CREATED);
+		final var newSuperhero = superheroService.save(superhero);
+		final var location =
+				ServletUriComponentsBuilder.fromCurrentRequest()
+						.path("/{id}")
+						.buildAndExpand(superhero.getId())
+						.toUri();
+
+		return ResponseEntity.created(location).body(newSuperhero);
 	}
 
 	@PutMapping("/superheroes/{id}")
@@ -149,7 +155,7 @@ public class SuperheroController {
 
 	@GetMapping("/superheroes/search")
 	public ResponseEntity<List<Superhero>> findByName(@RequestParam(defaultValue = "") String name) {
-		List<Superhero> superheroes = superheroService.findByName(name);
+		final List<Superhero> superheroes = superheroService.findByName(name);
 		return new ResponseEntity<>(superheroes, HttpStatus.OK);
 	}
 }
