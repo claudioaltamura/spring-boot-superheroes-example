@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class SuperheroServiceImplTest {
 
@@ -40,6 +40,7 @@ class SuperheroServiceImplTest {
         final var list = List.of(createEntity());
         when(superheroRepositoryMock.findAll()).thenReturn(list);
         assertThat(superheroService.getAll()).hasSize(1);
+        verify(superheroRepositoryMock, times(1)).findAll();
     }
 
     @Test
@@ -48,6 +49,7 @@ class SuperheroServiceImplTest {
         when(superheroRepositoryMock.findById(1L)).thenReturn(Optional.of(sample));
         //noinspection OptionalGetWithoutIsPresent
         assertThat(superheroService.getById(1L)).contains(createDto());
+        verify(superheroRepositoryMock, times(1)).findById(1L);
     }
 
     @Test
@@ -55,6 +57,7 @@ class SuperheroServiceImplTest {
         final var list = List.of(createEntity());
         when(superheroRepositoryMock.findByName("Batman")).thenReturn(list);
         assertThat(superheroService.findByName("Batman")).contains(createDto());
+        verify(superheroRepositoryMock, times(1)).findByName("Batman");
     }
 
     @Test
@@ -63,6 +66,7 @@ class SuperheroServiceImplTest {
         when(superheroRepositoryMock.save(any())).thenReturn(createEntity());
         Superhero savedHero = superheroService.save(sample);
         assertThat(savedHero.getId()).isEqualTo(createDto().getId());
+        verify(superheroRepositoryMock, times(1)).save(any());
     }
 
 }
