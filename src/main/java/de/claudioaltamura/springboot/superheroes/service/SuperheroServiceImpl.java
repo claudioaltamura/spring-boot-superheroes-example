@@ -46,8 +46,8 @@ public class SuperheroServiceImpl implements SuperheroService {
 		toBeCreated.setName(superhero.getName());
 		toBeCreated.setPower(superhero.getPower());
 		toBeCreated.setRealName(superhero.getRealName());
-		superheroRepository.save(toBeCreated);
-		return superheroMapper.toDto(toBeCreated);
+		final var createdSuperhero = superheroRepository.save(toBeCreated);
+		return superheroMapper.toDto(createdSuperhero);
 	}
 
 	public Superhero update(@Valid Superhero superhero) {
@@ -55,8 +55,8 @@ public class SuperheroServiceImpl implements SuperheroService {
 		toBeUpdated.setName(superhero.getName());
 		toBeUpdated.setPower(superhero.getPower());
 		toBeUpdated.setRealName(superhero.getRealName());
-		superheroRepository.save(toBeUpdated);
-		return superheroMapper.toDto(toBeUpdated);
+		final var updatedSuperhero = superheroRepository.save(toBeUpdated);
+		return superheroMapper.toDto(updatedSuperhero);
 	}
 
 	public void deleteById(@NotNull Long id) {
