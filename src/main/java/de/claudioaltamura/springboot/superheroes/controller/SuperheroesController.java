@@ -134,7 +134,7 @@ public class SuperheroesController {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)) })
 
 	})
-	public ResponseEntity<HttpStatus> deleteTutorial(@PathVariable("id") long id) {
+	public ResponseEntity<HttpStatus> delete(@PathVariable("id") long id) {
 		superheroService.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}

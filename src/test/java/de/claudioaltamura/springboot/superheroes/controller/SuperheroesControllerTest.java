@@ -12,10 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -41,21 +40,45 @@ class SuperheroesControllerTest {
         final Superhero superheroResponse =
                 Superhero.builder().id(1L).name("Batman").realName("Bruce Wayne").power(90.0d).build();
         when(superheroService.save(any(Superhero.class))).thenReturn(superheroResponse);
-        MvcResult mvcResult =
-                mockMvc
-                        .perform(
-                                post("/api/v1/superheroes")
-                                        .contentType(MediaType.APPLICATION_JSON)
-                                        .content(objectMapper.writeValueAsString(superheroRequest)))
-                        .andExpect(status().isCreated())
-                        .andExpect(header().string("Location", "http://localhost/api/v1/superheroes/1"))
-                        .andExpect(jsonPath("$.name").value("Batman"))
-                        .andReturn();
+        mockMvc
+                .perform(
+                        post("/api/v1/superheroes")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(objectMapper.writeValueAsString(superheroRequest)))
+                .andExpect(status().isCreated())
+                .andExpect(header().string("Location", "http://localhost/api/v1/superheroes/1"))
+                .andExpect(jsonPath("$.name").value("Batman"))
+                .andReturn();
 
         ArgumentCaptor<Superhero> superheroRequestArgumentCaptor =
                 ArgumentCaptor.forClass(Superhero.class);
 
         verify(superheroService).save(superheroRequestArgumentCaptor.capture());
+    }
+
+    @Test
+    void shouldThrownAValidationErrorWhenPost() throws Exception {
+        String invalidSuperheroRequest =
+                "{\"name\":\"Batman\",\"power\":100.1,\"realName\":\"Bruce Wayne\"}";
+
+        mockMvc
+                .perform(
+                        post("/api/v1/superheroes")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(invalidSuperheroRequest))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+    }
+
+    @Test
+    void shouldReturnNoContentWhenDeleteExistingSuperhero() throws Exception {
+        doNothing().when(superheroService).deleteById(anyLong());
+
+        mockMvc
+                .perform(delete("/api/v1/superheroes/{superheroesId}", 1))
+                .andExpect(status().isNoContent());
+
+        verify(superheroService).deleteById(anyLong());
     }
 
 }
