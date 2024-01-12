@@ -10,7 +10,7 @@ import lombok.Data;
 @Builder
 public class Superhero {
 
-	private Long id;
+	private long id;
 
 	@NotEmpty
 	private String name;

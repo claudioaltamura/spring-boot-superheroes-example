@@ -32,7 +32,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
-public class SuperheroController {
+public class SuperheroesController {
 
 	private final SuperheroService superheroService;
 
@@ -88,7 +88,7 @@ public class SuperheroController {
 		final var location =
 				ServletUriComponentsBuilder.fromCurrentRequest()
 						.path("/{id}")
-						.buildAndExpand(superhero.getId())
+						.buildAndExpand(newSuperhero.getId())
 						.toUri();
 
 		return ResponseEntity.created(location).body(newSuperhero);
