@@ -18,7 +18,7 @@ class SuperheroesApplicationTests {
 	private MockMvc mockMvc;
 
 	@Test
-	void getAllSuperheroes() throws Exception {
+	void shouldReturnAllSuperheroesWhenGet() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/superheroes")
 						.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
@@ -26,7 +26,7 @@ class SuperheroesApplicationTests {
 	}
 
 	@Test
-	void getSuperhero() throws Exception {
+	void shouldReturnSuperheroWhenPathParameterPassed() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/superheroes/1")
 						.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
@@ -34,7 +34,7 @@ class SuperheroesApplicationTests {
 	}
 
 	@Test
-	void returnsNotFoundForInvalidId() throws Exception {
+	void shouldReturnNotFoundWhenNotExistingId() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/superheroes/4")
 						.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound())
@@ -42,7 +42,7 @@ class SuperheroesApplicationTests {
 	}
 
 	@Test
-	void addsNewSuperHero() throws Exception {
+	void shouldAddNewSuperheroWhenPost() throws Exception {
 		String newSuperhero = "{\"name\":\"Hero\",\"realName\":\"real name\",\"power\":90.0}";
 		mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/superheroes")
 						.contentType(MediaType.APPLICATION_JSON)
