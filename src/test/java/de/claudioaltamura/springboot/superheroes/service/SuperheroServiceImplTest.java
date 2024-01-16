@@ -41,6 +41,7 @@ class SuperheroServiceImplTest {
         when(superheroRepositoryMock.findAll()).thenReturn(list);
         assertThat(superheroService.getAll()).hasSize(1);
         verify(superheroRepositoryMock, times(1)).findAll();
+        verifyNoMoreInteractions(superheroRepositoryMock);
     }
 
     @Test
@@ -50,6 +51,7 @@ class SuperheroServiceImplTest {
         //noinspection OptionalGetWithoutIsPresent
         assertThat(superheroService.getById(1L)).contains(createDto());
         verify(superheroRepositoryMock, times(1)).findById(1L);
+        verifyNoMoreInteractions(superheroRepositoryMock);
     }
 
     @Test
@@ -58,6 +60,7 @@ class SuperheroServiceImplTest {
         when(superheroRepositoryMock.findByName("Batman")).thenReturn(list);
         assertThat(superheroService.findByName("Batman")).contains(createDto());
         verify(superheroRepositoryMock, times(1)).findByName("Batman");
+        verifyNoMoreInteractions(superheroRepositoryMock);
     }
 
     @Test
@@ -67,6 +70,7 @@ class SuperheroServiceImplTest {
         Superhero savedHero = superheroService.save(sample);
         assertThat(savedHero.getId()).isEqualTo(createDto().getId());
         verify(superheroRepositoryMock, times(1)).save(any());
+        verifyNoMoreInteractions(superheroRepositoryMock);
     }
 
 }
