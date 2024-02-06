@@ -73,4 +73,21 @@ class SuperheroServiceImplTest {
         verifyNoMoreInteractions(superheroRepositoryMock);
     }
 
+    @Test
+    void shouldUpdateSuperhero() {
+        final var superheroSaved = createEntity();
+        when(superheroRepositoryMock.findById(1L)).thenReturn(Optional.of(superheroSaved));
+
+        final var superheroUpdated = createEntity();
+        superheroUpdated.setPower(90.1d);
+        when(superheroRepositoryMock.save(any())).thenReturn(superheroUpdated);
+        final var superheroToBeUpdated = Superhero.builder().id(1L).name("Batman").realName("Bruce Wayne").power(90.1d).build();
+
+        final var updatedHero = superheroService.update(superheroToBeUpdated);
+
+        assertThat(updatedHero.getPower()).isEqualTo(90.1d);
+        verify(superheroRepositoryMock, times(1)).findById(any());
+        verify(superheroRepositoryMock, times(1)).save(any());
+        verifyNoMoreInteractions(superheroRepositoryMock);
+    }
 }

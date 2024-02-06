@@ -1,6 +1,9 @@
 package de.claudioaltamura.springboot.superheroes.repository;
 
+import de.claudioaltamura.springboot.superheroes.Superhero;
 import de.claudioaltamura.springboot.superheroes.entity.SuperheroEntity;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -8,6 +11,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -27,4 +31,14 @@ class SuperheroRepositoryTest {
 
         assertThat(superheroes).hasSize(1);
     }
+
+    //getAll();
+    //getById(@NotNull Long id);
+    //existsById(@NotNull  Long id);
+    //findByName(@NotNull String name);
+    //save(@Valid Superhero superhero);
+    //update(@Valid Superhero superhero);
+    //deleteById(@NotNull Long id);
+    //deleteAll();
+
 }

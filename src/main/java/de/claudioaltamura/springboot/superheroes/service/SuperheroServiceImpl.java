@@ -51,12 +51,15 @@ public class SuperheroServiceImpl implements SuperheroService {
 	}
 
 	public Superhero update(@Valid Superhero superhero) {
-		SuperheroEntity toBeUpdated = new SuperheroEntity();
-		toBeUpdated.setName(superhero.getName());
-		toBeUpdated.setPower(superhero.getPower());
-		toBeUpdated.setRealName(superhero.getRealName());
-		final var updatedSuperhero = superheroRepository.save(toBeUpdated);
-		return superheroMapper.toDto(updatedSuperhero);
+		return superheroRepository.findById(superhero.getId())
+				.map(toBeUpdated -> {
+					toBeUpdated.setName(superhero.getName());
+					toBeUpdated.setPower(superhero.getPower());
+					toBeUpdated.setRealName(superhero.getRealName());
+					final var updatedSuperHero = superheroRepository.save(toBeUpdated);
+					return superheroMapper.toDto(updatedSuperHero);
+				})
+				.orElseThrow(()-> new SuperheroNotFoundException(String.format("Superhero (id=%d) not found.", superhero.getId())));
 	}
 
 	public void deleteById(@NotNull Long id) {
