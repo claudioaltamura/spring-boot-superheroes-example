@@ -6,6 +6,8 @@ import de.claudioaltamura.springboot.superheroes.repository.SuperheroRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +44,19 @@ class SuperheroServiceImplTest {
         assertThat(superheroService.getAll()).hasSize(1);
         verify(superheroRepositoryMock, times(1)).findAll();
         verifyNoMoreInteractions(superheroRepositoryMock);
+    }
+
+    @Test
+    void shouldReturnPage() {
+        final var pageNumber = 0;
+        final var pageSize = 10;
+        final var list = List.of(createEntity());
+        final var pageRequest = PageRequest.of(pageNumber, pageSize);
+        when(superheroRepositoryMock.findAll(PageRequest.of(pageNumber, pageSize))).thenReturn(new PageImpl<>(list,pageRequest,list.size()));
+        assertThat(superheroService.get(pageNumber, pageSize)).hasSize(1);
+        verify(superheroRepositoryMock, times(1)).findAll(PageRequest.of(pageNumber, pageSize));
+        verifyNoMoreInteractions(superheroRepositoryMock);
+
     }
 
     @Test

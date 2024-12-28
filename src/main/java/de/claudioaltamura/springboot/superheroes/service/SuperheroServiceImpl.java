@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import de.claudioaltamura.springboot.superheroes.Superhero;
@@ -27,6 +28,11 @@ public class SuperheroServiceImpl implements SuperheroService {
 
 	public List<Superhero> getAll() {
 		return superheroRepository.findAll().stream().map(superheroMapper::toDto).collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Superhero> get(Integer pageNumber, Integer size) {
+		return superheroRepository.findAll(PageRequest.of(pageNumber, size)).stream().map(superheroMapper::toDto).collect(Collectors.toList());
 	}
 
 	public Optional<Superhero> getById(@NotNull Long id) {

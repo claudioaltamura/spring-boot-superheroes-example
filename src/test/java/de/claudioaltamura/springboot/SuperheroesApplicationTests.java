@@ -19,11 +19,12 @@ class SuperheroesApplicationTests {
 
 	@Test
 	void shouldReturnAllSuperheroesWhenGet() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/superheroes")
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/superheroes?pageNumber=0&size=10")
 						.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andReturn();
 	}
+
 
 	@Test
 	void shouldReturnSuperheroWhenPathParameterPassed() throws Exception {

@@ -47,8 +47,11 @@ public class SuperheroesController {
 					@Content(mediaType = "application/json", schema = @Schema(implementation = Error.class)) }
 		)}
 	)
-	public ResponseEntity<List<Superhero>> getAll() {
-		return new ResponseEntity<>(superheroService.getAll(), HttpStatus.OK);
+	public ResponseEntity<List<Superhero>> get(
+			@RequestParam(defaultValue = "0") final Integer pageNumber,
+			@RequestParam(defaultValue = "10") final Integer size
+	) {
+		return ResponseEntity.ok(superheroService.get(pageNumber, size));
 	}
 
 	@GetMapping("/superheroes/{id}")

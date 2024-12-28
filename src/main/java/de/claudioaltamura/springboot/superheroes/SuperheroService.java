@@ -10,6 +10,8 @@ public interface SuperheroService {
 
 	List<Superhero> getAll();
 
+	List<Superhero> get(Integer pageNumber, Integer size);
+
 	Optional<Superhero> getById(@NotNull Long id);
 
 	boolean existsById(@NotNull  Long id);
