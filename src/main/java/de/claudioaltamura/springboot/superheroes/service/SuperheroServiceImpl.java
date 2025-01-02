@@ -59,7 +59,7 @@ public class SuperheroServiceImpl implements SuperheroService {
 		if(size < 0) {
 			sanitizedSize = 0;
 		}
-		if(size>100) {
+		if(size > 100) {
 			sanitizedSize = 100;
 		}
 		return sanitizedSize;
