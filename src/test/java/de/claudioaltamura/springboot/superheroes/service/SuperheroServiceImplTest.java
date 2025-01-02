@@ -52,8 +52,10 @@ class SuperheroServiceImplTest {
         final var size = 10;
         final var list = List.of(createEntity());
         final var pageRequest = PageRequest.of(page, size);
+        when(superheroRepositoryMock.count()).thenReturn(1L);
         when(superheroRepositoryMock.findAll(pageRequest)).thenReturn(new PageImpl<>(list,pageRequest,list.size()));
         assertThat(superheroService.get(page, size)).hasSize(1);
+        verify(superheroRepositoryMock, times(1)).count();
         verify(superheroRepositoryMock, times(1)).findAll(pageRequest);
         verifyNoMoreInteractions(superheroRepositoryMock);
     }
