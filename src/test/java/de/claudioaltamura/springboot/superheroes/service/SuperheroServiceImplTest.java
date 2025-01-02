@@ -48,22 +48,20 @@ class SuperheroServiceImplTest {
 
     @Test
     void shouldReturnPage() {
-        final var pageNumber = 0;
-        final var pageSize = 10;
+        final var page = 0;
+        final var size = 10;
         final var list = List.of(createEntity());
-        final var pageRequest = PageRequest.of(pageNumber, pageSize);
-        when(superheroRepositoryMock.findAll(PageRequest.of(pageNumber, pageSize))).thenReturn(new PageImpl<>(list,pageRequest,list.size()));
-        assertThat(superheroService.get(pageNumber, pageSize)).hasSize(1);
-        verify(superheroRepositoryMock, times(1)).findAll(PageRequest.of(pageNumber, pageSize));
+        final var pageRequest = PageRequest.of(page, size);
+        when(superheroRepositoryMock.findAll(pageRequest)).thenReturn(new PageImpl<>(list,pageRequest,list.size()));
+        assertThat(superheroService.get(page, size)).hasSize(1);
+        verify(superheroRepositoryMock, times(1)).findAll(pageRequest);
         verifyNoMoreInteractions(superheroRepositoryMock);
-
     }
 
     @Test
     void shouldReturnSuperheroById() {
         final var sample = createEntity();
         when(superheroRepositoryMock.findById(1L)).thenReturn(Optional.of(sample));
-        //noinspection OptionalGetWithoutIsPresent
         assertThat(superheroService.getById(1L)).contains(createDto());
         verify(superheroRepositoryMock, times(1)).findById(1L);
         verifyNoMoreInteractions(superheroRepositoryMock);

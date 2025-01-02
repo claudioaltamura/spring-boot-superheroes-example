@@ -19,7 +19,7 @@ class SuperheroesApplicationTests {
 
 	@Test
 	void shouldReturnAllSuperheroesWhenGet() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/superheroes?pageNumber=0&size=10")
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/superheroes?page=0&size=10")
 						.accept(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andReturn();

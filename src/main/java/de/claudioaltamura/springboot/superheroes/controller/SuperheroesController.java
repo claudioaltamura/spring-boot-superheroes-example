@@ -48,10 +48,10 @@ public class SuperheroesController {
 		)}
 	)
 	public ResponseEntity<List<Superhero>> get(
-			@RequestParam(defaultValue = "0") final Integer pageNumber,
+			@RequestParam(defaultValue = "0") final Integer page,
 			@RequestParam(defaultValue = "10") final Integer size
 	) {
-		return ResponseEntity.ok(superheroService.get(pageNumber, size));
+		return ResponseEntity.ok(superheroService.get(page, size));
 	}
 
 	@GetMapping("/superheroes/{id}")

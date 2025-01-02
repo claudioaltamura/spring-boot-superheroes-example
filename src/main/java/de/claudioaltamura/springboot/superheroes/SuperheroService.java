@@ -10,7 +10,7 @@ public interface SuperheroService {
 
 	List<Superhero> getAll();
 
-	List<Superhero> get(Integer pageNumber, Integer size);
+	List<Superhero> get(Integer page, Integer size);
 
 	Optional<Superhero> getById(@NotNull Long id);
 

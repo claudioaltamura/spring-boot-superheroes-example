@@ -31,8 +31,9 @@ public class SuperheroServiceImpl implements SuperheroService {
 	}
 
 	@Override
-	public List<Superhero> get(Integer pageNumber, Integer size) {
-		return superheroRepository.findAll(PageRequest.of(pageNumber, size)).stream().map(superheroMapper::toDto).collect(Collectors.toList());
+	public List<Superhero> get(Integer page, Integer size) {
+		var pageRequest = PageRequest.of(page, size);
+		return superheroRepository.findAll(pageRequest).stream().map(superheroMapper::toDto).collect(Collectors.toList());
 	}
 
 	public Optional<Superhero> getById(@NotNull Long id) {
