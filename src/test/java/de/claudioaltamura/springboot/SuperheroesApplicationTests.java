@@ -1,56 +1,58 @@
 package de.claudioaltamura.springboot;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.reactive.server.WebTestClient;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SuperheroesApplicationTests {
 
 	@Autowired
-	private MockMvc mockMvc;
+	private WebTestClient webTestClient;
 
 	@Test
-	void shouldReturnAllSuperheroesWhenGet() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/superheroes?page=0&size=10")
-						.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())
-				.andReturn();
+	void shouldReturnAllSuperheroesWhenGet() {
+		this.webTestClient
+				.get()
+				.uri("/api/v1/superheroes")
+				.accept(MediaType.APPLICATION_JSON)
+				.exchange()
+				.expectStatus().isOk();
 	}
 
 
 	@Test
-	void shouldReturnSuperheroWhenPathParameterPassed() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/superheroes/1")
-						.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isOk())
-				.andReturn();
+	void shouldReturnSuperheroWhenPathParameterPassed() {
+		this.webTestClient
+				.get()
+				.uri("/api/v1/superheroes/1")
+				.accept(MediaType.APPLICATION_JSON)
+				.exchange()
+				.expectStatus().isOk();
 	}
 
 	@Test
-	void shouldReturnNotFoundWhenNotExistingId() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/superheroes/4")
-						.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isNotFound())
-				.andReturn();
+	void shouldReturnNotFoundWhenNotExistingId() {
+		this.webTestClient
+				.get()
+				.uri("/api/v1/superheroes/4")
+				.accept(MediaType.APPLICATION_JSON)
+				.exchange()
+				.expectStatus().isNotFound();
 	}
 
 	@Test
-	void shouldAddNewSuperheroWhenPost() throws Exception {
-		String newSuperhero = "{\"name\":\"Hero\",\"realName\":\"real name\",\"power\":90.0}";
-		mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/superheroes")
-						.contentType(MediaType.APPLICATION_JSON)
-						.content(newSuperhero)
-						.accept(MediaType.APPLICATION_JSON))
-				.andExpect(status().isCreated())
-				.andReturn();
+	void shouldAddNewSuperheroWhenPost() {
+		var newSuperhero = "{\"name\":\"Hero\",\"realName\":\"real name\",\"power\":90.0}";
+		this.webTestClient.post()
+				.uri("/api/v1/superheroes")
+				.contentType(MediaType.APPLICATION_JSON)
+				.bodyValue(newSuperhero)
+				.accept(MediaType.APPLICATION_JSON)
+				.exchange()
+				.expectStatus().isCreated();
 	}
 
 }
